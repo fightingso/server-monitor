@@ -24,13 +24,12 @@ client = discord.Client(intents=intents)
 async def on_ready():
     for channel in CHANNEL_ID:
         channel = client.get_channel(int(channel))
-        message = "🚀 **Server Monitoring Bot Activated!** 🚀"
+        message = "🚀 **Server Monitor Activated!** 🚀"
         await channel.send(message)
 
     while True:
         await login_report(client, CHANNEL_ID)
         await asyncio.sleep(1)
-
 
 
 @client.event

@@ -3,7 +3,10 @@ import subprocess
 async def reply(message):
     if message.content == "/who":
         result = subprocess.run(["who"], capture_output=True, text=True)
-        await message.channel.send(result.stdout)
+        if result.stdout == "":
+            await message.channel.send("No one logged in.")
+        else:
+            await message.channel.send(result.stdout)
 
     elif message.content == "/smi":
         result = subprocess.run(["nvidia-smi", "--query-gpu=timestamp,name,utilization.gpu,memory.used", "--format=csv"], capture_output=True, text=True)
