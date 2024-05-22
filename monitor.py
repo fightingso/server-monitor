@@ -1,7 +1,8 @@
 import os
+import asyncio
 import discord
-import subprocess
 from dotenv import load_dotenv
+from bot_modules import reply, login_report
 
 load_dotenv()
 
@@ -23,19 +24,20 @@ client = discord.Client(intents=intents)
 async def on_ready():
     for channel in CHANNEL_ID:
         channel = client.get_channel(int(channel))
-        message = """
-            🚀 Server Monitoring Bot Activated! 🚀 \n\nHello and welcome! I'm here to assist you with real-time monitoring of your server's performance and activities. To get started, please configure your monitoring settings using the commands listed in /help.\n\nInterested in contributing to the development of this bot? Visit our GitHub repository at https://github.com/fightingso/server-monitor and see how you can help!
-        """
+        message = "🚀 **Server Monitoring Bot Activated!** 🚀"
         await channel.send(message)
+
+    while True:
+        await login_report(client, CHANNEL_ID)
+        await asyncio.sleep(1)
+
 
 
 @client.event
 async def on_message(message):
-    if message.author.bot or message.channel.id not in CHANNEL_ID:
+    if message.author.bot or str(message.channel.id) not in CHANNEL_ID:
         return
-    if message.content == '/who':
-        result = subprocess.run(['who'], capture_output=True, text=True)
-        await message.channel.send(result.stdout)
+    await reply(message)
 
 
 if __name__=='__main__':
