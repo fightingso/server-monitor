@@ -20,6 +20,8 @@ To run this project, you will need to add the following environment variables to
 
 `CHANNEL_ID` : ID of the channel using the bot. Multiple channels can be used by separating them with a comma.
 
+Additionally, this project has a feature that outputs command information to a Discord chat only when sudo is executed. To enable this feature, you need to either change the permissions of '/var/log/auth.log' (which can be done using 'sudo setfacl -m u:$(whoami):r /var/log/auth.log') or run the project with sudo.
+
 Finally, install the necessary libraries and run monitor.py.
 
 ```
