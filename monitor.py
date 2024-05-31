@@ -2,7 +2,7 @@ import os
 import asyncio
 import discord
 from dotenv import load_dotenv
-from bot_modules import reply, login_report
+from bot_modules import reply, login_report, sudo_report
 
 load_dotenv()
 
@@ -29,6 +29,7 @@ async def on_ready():
 
     while True:
         await login_report(client, CHANNEL_ID)
+        await sudo_report(client,CHANNEL_ID)
         await asyncio.sleep(1)
 
 
